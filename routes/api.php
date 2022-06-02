@@ -2,7 +2,9 @@
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
-use App\Http\CategoryController;
+use App\Http\Controllers\CategoryController;
+use App\Http\Controllers\PostController;
+
 /*
 |--------------------------------------------------------------------------
 | API Routes
@@ -14,7 +16,20 @@ use App\Http\CategoryController;
 |
 */
 
+// CATEGORY 
 Route::get('/category', [CategoryController::class, 'index'] );
+Route::get('/category/{id}', [CategoryController::class, 'show'] );
+
+Route::post('/category', [CategoryController::class, 'store'] );
+
+Route::put('/category/{id}', [CategoryController::class, 'update'] );
+Route::delete('/category/{id}', [CategoryController::class, 'destroy'] );
+
+
+
+
+// Route::get('/post', [PostController::class, 'index'] );
+
 // Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 //     return $request->user();
 // });

@@ -3,7 +3,8 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Model\Category;
+use App\Models\Category;
+
 
 class CategoryController extends Controller
 {
@@ -15,7 +16,9 @@ class CategoryController extends Controller
     public function index()
     {
         //
+
         return Category::all();
+        
 
     }
 
@@ -27,7 +30,38 @@ class CategoryController extends Controller
      */
     public function store(Request $request)
     {
+
+
         //
+        // $validated = $request->validate([
+        //     'title'=> "required|unique:category, category_title"
+        // ]); 
+
+
+        $categoryTitleCheck  = Category::where('category_title', $request->title)->get(); 
+
+        if ($request->title) {
+            if (count($categoryTitleCheck) > 0) {
+                return "Category already exist";
+            }else{
+                $category = new Category; 
+    
+                $category->category_title = strtolower($request->title);
+    
+                if($category->save()){
+                    $message = "Category Added Successfully";
+
+                    return $message;
+                }; 
+            }
+        }else{
+            return "Category title is required";
+        }
+        
+        
+
+        
+        
     }
 
     /**
@@ -39,6 +73,9 @@ class CategoryController extends Controller
     public function show($id)
     {
         //
+
+        
+        return Category::where('id', $id)->get();
     }
 
     /**
@@ -51,6 +88,7 @@ class CategoryController extends Controller
     public function update(Request $request, $id)
     {
         //
+        return $id;
     }
 
     /**
