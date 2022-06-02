@@ -88,7 +88,20 @@ class CategoryController extends Controller
     public function update(Request $request, $id)
     {
         //
-        return $id;
+        if ($request->title) {
+            $category = Category::find($id);
+
+            $category->category_title = strtolower($request->title);
+
+            if ($category->save()) {
+                return "Updated Successfully";
+            }
+            
+        }else{
+            return "Category title is required";
+        }
+        
+       
     }
 
     /**
@@ -99,6 +112,10 @@ class CategoryController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $category = Category::find($id);
+ 
+        return $category->delete();
+
+        
     }
 }
