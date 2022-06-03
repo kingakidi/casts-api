@@ -48,8 +48,12 @@ class PostController extends Controller
         $post->post_slug = $request->post_slug;
 
         
-        return Post::create($request->all());
-        // return $post->save();
+        
+        if ($post->save()) {
+           return "post created successfully";
+        }else{
+            return "Error: Failed to create post";
+        }
     }
 
     /**
@@ -60,7 +64,8 @@ class PostController extends Controller
      */
     public function show($id)
     {
-        //
+        $post = Post::find($id);
+        return $post;
     }
 
     /**
@@ -72,7 +77,13 @@ class PostController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $new_post = Post::find($id); 
+        // $post->post_title = $request->post_title;
+        
+        // $post->save();
+
+        $new_post->update($request->all());
+        return $new_post;
     }
 
     /**
@@ -84,5 +95,15 @@ class PostController extends Controller
     public function destroy($id)
     {
         //
+
+        $post = Post::find($id); 
+        if ($post !== NULL) {
+            $post->delete();
+
+            return $post;
+        }else{
+            return "Post does not exist";
+        }
+        
     }
 }

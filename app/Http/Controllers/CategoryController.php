@@ -88,18 +88,22 @@ class CategoryController extends Controller
     public function update(Request $request, $id)
     {
         //
-        if ($request->title) {
+      
+            $validated = $request->validate(['category_title'=> "required"]);
+
             $category = Category::find($id);
 
-            $category->category_title = strtolower($request->title);
+             if($category !== NULL){
+                // $category->category_title = strtolower($request->title);
 
-            if ($category->save()) {
-                return "Updated Successfully";
-            }
+                $category->update($request->all());
+
+                return $category;
+             }else{
+                 return "Category not found";
+             }
             
-        }else{
-            return "Category title is required";
-        }
+       
         
        
     }
