@@ -75,7 +75,7 @@ class CategoryController extends Controller
         //
 
         
-        return Category::where('id', $id)->get();
+        return Category::find($id);
     }
 
     /**
@@ -114,7 +114,15 @@ class CategoryController extends Controller
     {
         $category = Category::find($id);
  
-        return $category->delete();
+        if ($category) {
+          
+            $category->delete();
+
+            return $category;
+        }else{
+            return "Data No Exist";
+        }
+        
 
         
     }
